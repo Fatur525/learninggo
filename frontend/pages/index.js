@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react'
+import 'tailwindcss/tailwind.css'
 
 export default function Home() {
   const [data, setData] = useState(null);
@@ -23,7 +24,8 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <div class="grid h-screen place-items-center">
+      <div>
       {error && <div>Failed to load {error.toString()}</div>}
       {
         !data ? <div>Loading...</div>
@@ -35,8 +37,8 @@ export default function Home() {
       {data?.data && data?.data?.map((item, index) => (
         <p key={index}>{item}</p>
       ))}
-    </div>
-  
+      </div>
+    </div>  
   )
 }
 
@@ -67,12 +69,24 @@ function Input({onSuccess}) {
   }
   return (
     <div>
+      <h1 class="font-mono text-xl">Selamat datang</h1>
+      <p class="font-mono">Silahkan input data</p>
+      <br />
+      <form class="w-full max-w-sm border-2 rounded-md border-white-500" onSubmit={handleSubmit} id="form1">
+        <div class="flex items-center border-b border-teal-500 py-2">
+          <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Jane Doe" aria-label="text" name='data' />
+          <button class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" type="submit">
+          Submit
+        </button>
+        <button class="flex-shrink-0 border-transparent border-4 text-teal-500 hover:text-teal-800 text-sm py-1 px-2 rounded" type="button">
+          Cancel
+        </button>
+      </div>
+      </form>
       {error && <p>error: {error.toString()}</p>}
       {data && <p>success: {data}</p>}
-      <form onSubmit={handleSubmit}>
-        <input name="data" type="text" />
-        <button>submit</button>
-      </form>
+      <hr />
+      <br />
     </div>
   )
 }
