@@ -9,6 +9,12 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 )
 
+func handler(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"data": db,
+	})
+}
+
 var db []string
 
 type DataRequest struct {
@@ -23,12 +29,6 @@ func postHandler(c *gin.Context) {
 	}
 	db = append(db, data.Text)
 	c.JSON(http.StatusOK, gin.H{"message": "Data berhasil dikirim", "data": data.Text})
-}
-
-func handler(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"data": db,
-	})
 }
 
 func main() {

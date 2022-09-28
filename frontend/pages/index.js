@@ -4,18 +4,18 @@ import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react'
 
 export default function Home() {
-  const [data, setData] = useState(null)
-  const [error, setError] = useState(null)
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
   useEffect(() => {
     getData()
-  }, []);
+  }, []); 
 
   console.log(data?.data)
   const getData = async () => {
     try {
-      const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL)
+      const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL);
       const data = await res.json();
-      setData(data)
+      setData(data);
     } 
     catch (error) {
       setError(error);
@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <div>
-      {error && <div>Failed to load (error.toString())</div>}
+      {error && <div>Failed to load {error.toString()}</div>}
       {
         !data ? <div>Loading...</div>
           : (
@@ -53,9 +53,9 @@ function Input({onSuccess}) {
     }
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/send`,{
-        method :'POST',
-        body : JSON.stringify(body)
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/send `, {
+        method:'POST',
+        body: JSON.stringify(body)
       });
       const data = await res.json();
       setData(data.message);
