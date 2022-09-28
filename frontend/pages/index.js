@@ -53,7 +53,7 @@ function Input({onSuccess}) {
     }
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/send `, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}send `, {
         method:'POST',
         body: JSON.stringify(body)
       });
