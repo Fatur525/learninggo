@@ -6,11 +6,11 @@ jobs:
     name: A job to check my code quality
     steps:
       - name: Check code meets quality standards
-        id: code-inspector
-        uses: codeinspectorio/github-action@master
+        id: codiga
+        uses: codiga/github-action@master
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          code_inspector_api_token: ${{ secrets.CODE_INSPECTOR_API_TOKEN }}
+          codiga_api_token: ${{ secrets.CODIGA_API_TOKEN }}
           force_ref: "none"
           min_quality_grade: "WARNING"
           min_quality_score: "50"
