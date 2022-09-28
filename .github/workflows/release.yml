@@ -3,7 +3,7 @@ name: deployment
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   heroku:
@@ -16,6 +16,3 @@ jobs:
         run: git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
       - name: Deploy api to Heroku
         run: git push heroku `git subtree split --prefix backend master`:refs/heads/master --force
-			#--backend main
-
-```
