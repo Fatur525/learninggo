@@ -15,6 +15,10 @@ func handler(c *gin.Context) {
 	})
 }
 
+type database struct {
+	data []string
+}
+
 var db []string
 
 type DataRequest struct {
