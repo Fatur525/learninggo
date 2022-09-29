@@ -4,6 +4,7 @@ import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react'
 import 'tailwindcss/tailwind.css'
 
+
 export default function Home() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -23,6 +24,32 @@ export default function Home() {
     }
   }
 
+  const deleteItem = async(id) => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/delete/${id}`, {
+        method:'DELETE',
+      });
+      const data = await res.json();
+      getData()
+    } 
+    catch (error) {
+      setError(error);
+    }
+  }
+
+  const updateData = async(id) => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/update/${id}`, {
+        method:'PUT',
+      });
+      const data = await res.json();
+      getData()
+    } 
+    catch (error) {
+      setError(error);
+    }
+  }
+
   return (
     <div class="grid h-screen place-items-center">
       <div>
@@ -35,7 +62,16 @@ export default function Home() {
       }
       <Input onSuccess={getData}/>
       {data?.data && data?.data?.map((item, index) => (
-        <p key={index}>{item}</p>
+        <div key={index}>
+          <span class="mr-2">ID: {item.ID} task: {item.task}</span>
+          <input type="checkbox" defaultChecked={item.done} class="mr-4"/>
+          <button onClick={() => updateData(item.ID)} class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+            Selesai
+          </button>
+          <button onClick={() => deleteItem(item.ID)} class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+          </button>
+          </div>  
       ))}
       </div>
     </div>  
@@ -51,18 +87,18 @@ function Input({onSuccess}) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const body = {
-      text: formData.get("data")
+      task: formData.get("data")
     }
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/send `, {
-        method:'POST',
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/send`, {
+        method: 'POST',
         body: JSON.stringify(body)
       });
       const data = await res.json();
       setData(data.message);
       onSuccess();
-    } 
+    }
     catch (error) {
       setError(error);
     }
